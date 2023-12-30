@@ -1,4 +1,4 @@
-﻿namespace DavidBekeris.Models
+﻿namespace DavidBekeris.Data
 {
     public class IndexModel
     {
