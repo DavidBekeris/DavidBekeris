@@ -18,7 +18,11 @@ namespace DavidBekeris.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Projekt()
+        {
+            return View();
+        }
+        public IActionResult Kontakt()
         {
             return View();
         }
