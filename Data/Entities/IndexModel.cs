@@ -5,14 +5,14 @@
         public IndexModel(int id, Uri heroUrl, string heroText, string heroHeader)
         {
             Id = id;
-            this.heroUrl = heroUrl;
-            this.heroText = heroText;
-            this.heroHeader = heroHeader;
+            HeroUrl = heroUrl;
+            HeroText = heroText;
+            HeroHeader = heroHeader;
         }
 
         public int Id { get; set; }
-        public Uri heroUrl { get; protected set; }
-        public string heroText { get; set; }
-        public string heroHeader { get; set; }
+        public Uri HeroUrl { get; protected set; }
+        public string HeroText { get; set; }
+        public string HeroHeader { get; set; }
     }
 }
