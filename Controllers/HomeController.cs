@@ -27,6 +27,11 @@ namespace DavidBekeris.Controllers
             return View();
         }
 
+        public IActionResult CV()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
