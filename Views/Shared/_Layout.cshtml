@@ -10,27 +10,58 @@
     <link rel="stylesheet" href="~/DavidBekeris.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.3/components/contacts/contact-5/assets/css/contact-5.css">
+
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/vendor/aos/aos.css" rel="stylesheet">
+    <link href="/css/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/css/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="~/css/main.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body navbar-expand" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="/Pics/logo-white.png" alt="..." height="36">
-                </a>
-@*                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button> *@
-@*                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> *@
-                <div class="navbar-nav me-auto">
-                        <a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Index">Hem</a>
-                        <a class="nav-link" asp-controller="Home" asp-action="Projekt">Projekt</a>
-                        <a class="nav-link" asp-controller="Home" asp-action="Kontakt">Kontakt</a>
-                        <a class="nav-link" asp-controller="Home" asp-action="CV">CV</a>
-                    </div>
-@*                 </div> *@
-            </div>
+
+    <header id="header" class="header dark-background d-flex flex-column">
+        <i class="header-toggle d-xl-none bi bi-list"></i>
+
+        <div class="profile-img">
+            <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+        </div>
+
+        <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>
+                <a class="nav-link" asp-controller="Home" asp-action="Index">David Bekeris</a>
+            </h1>
+        </a>
+
+        <div class="social-links text-center">
+            <a href="#" class="twitter"><i class="bi bi-github"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Index"><i class="bi bi-person navicon"></i>OM</a></li>
+                <li><a class="nav-link" asp-controller="Home" asp-action="CV"><i class="bi bi-file-earmark-text navicon"></i>CV</a></li>
+                <li><a class="nav-link" asp-controller="Home" asp-action="Projekt"><i class="bi bi-images navicon"></i> Portfolio</a></li>
+                <li><a class="nav-link" asp-controller="Home" asp-action="Kontakt"><i class="bi bi-envelope navicon"></i> Kontakt</a></li>
+            </ul>
         </nav>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
