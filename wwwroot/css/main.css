@@ -479,13 +479,13 @@ h6 {
 /*--------------------------------------------------------------
 # Global Sections
 --------------------------------------------------------------*/
-section,
+/*section,
 .section {
   color: var(--default-color);
   background-color: var(--background-color);
   padding: 60px 0;
   overflow: clip;
-}
+}*/
 
 /*--------------------------------------------------------------
 # Global Section Titles
