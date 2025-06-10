@@ -32,7 +32,7 @@
     <link href="~/css/main.css" rel="stylesheet">
 </head>
 <body>
-
+    <div class="page-wrapper">
     <header id="header" class="header dark-background d-flex flex-column">
         <i class="header-toggle d-xl-none bi bi-list"></i>
 
@@ -61,10 +61,12 @@
         </nav>
 
     </header>
+        <div class="layout-container">
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+    </div>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -72,6 +74,7 @@
             &copy; 2025 - DavidBekeris 
         </div>
     </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
