@@ -1,4 +1,5 @@
 using DavidBekeris.Data;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
@@ -11,6 +12,20 @@ builder.Services.AddDbContext<DavidBekerisContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
+
+var env = builder.Environment;
+
+if (env.IsDevelopment())
+{
+    // Let dev use defaults or HTTPS ports
+}
+else
+{
+    builder.WebHost.ConfigureKestrel(serverOptions =>
+    {
+        serverOptions.ListenAnyIP(5000); // Prod only
+    });
+}
 
 var app = builder.Build();
 
