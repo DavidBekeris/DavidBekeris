@@ -20,14 +20,14 @@ namespace DavidBekeris.Controllers
                 // Remove old entries > 1 hour
                 _ipDownloadLog[ip] = _ipDownloadLog[ip].Where(t => t > DateTime.UtcNow.AddHours(-1)).ToList();
 
-                if (_ipDownloadLog[ip].Count >= 5)
+                if (_ipDownloadLog[ip].Count >= 10)
                 {
                     return StatusCode(429, "Too many downloads. Please try again later.");
                 }
 
                 _ipDownloadLog[ip].Add(DateTime.UtcNow);
 
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", "David Bekeris CV - Webbutvecklare.pdf");
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "PrivateFiles", "David Bekeris CV - Webbutvecklare.pdf");
                 var fileBytes = System.IO.File.ReadAllBytes(filePath);
                 return File(fileBytes, "application/pdf", "David Bekeris CV - Webbutvecklare.pdf");
             }
