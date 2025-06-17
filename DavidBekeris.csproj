@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Files\David Bekeris CV - Webbutvecklare.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="4.0.0.7" />
     <PackageReference Include="bootstrap" Version="5.3.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.0" />
@@ -19,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Files\" />
+    <Folder Include="Files\" />
     <Folder Include="wwwroot\Pics\" />
   </ItemGroup>
 
