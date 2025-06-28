@@ -13,20 +13,25 @@ namespace DavidBekeris.Controllers
             _logger = logger;
         }
 
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet("Projekt")]
         public IActionResult Projekt()
         {
             return View();
         }
+
+        [HttpGet("Kontakt")]
         public IActionResult Kontakt()
         {
             return View();
         }
 
+        [HttpGet("CV")]
         public IActionResult CV()
         {
             return View();
