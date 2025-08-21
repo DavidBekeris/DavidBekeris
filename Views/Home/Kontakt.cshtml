@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Kontakt - ";
 }
+@model DavidBekeris.Models.ContactFormModel
 
 <!-- Contact 5 - Bootstrap Brain Component -->
 <section class="col-12 py-3 py-md-5 py-xl-8">
@@ -18,31 +19,34 @@
         <div class="row gy-4 gy-md-5 gy-lg-0 align-items-md-center">
             <div class="col-12 col-lg-6">
                 <div class="border overflow-hidden rounded">
-                    <form action="#!">
+                    <form asp-action="Contact" asp-controller="Home" method="post">
                         <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
                             <div class="col-12">
-                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <label asp-for="Email" class="form-label">Email <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                                         </svg>
                                     </span>
-                                    <input type="email" class="form-control" id="email" name="email" value="" required>
+                                    <input asp-for="Email" class="form-control" id="email" name="email" value="" required>
                                 </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
             
                             <div class="col-12">
-                                <label for="subject" class="form-label">Ämne<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="subject" name="subject" value="" required>
+                                <label asp-for="Subject" class="form-label">Ämne<span class="text-danger">*</span></label>
+                                <input asp-for="Subject" class="form-control" id="subject" name="subject" value="" required>
+                                <span asp-validation-for="Subject" class="text-danger"></span>
                             </div>
                             <div class="col-12">
-                                <label for="message" class="form-label">Meddelande<span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                                <label asp-for="Message" class="form-label">Meddelande<span class="text-danger">*</span></label>
+                                <textarea asp-for="Message" id="message" name="message" rows="3" required></textarea>
+                                <span asp-validation-for="Message" class="text-danger"></span>
                             </div>
                             <div class="col-12">
                                 <div class="d-grid">
-                                    <button class="btn btn-primary btn-lg" asp-controller="Kontakt" asp-action="SendEmailAsync" type="submit">Skicka meddelande</button>
+                                    <button type="submit" class="btn btn-primary btn-lg">Skicka meddelande</button>
                                 </div>
                             </div>
                         </div>
