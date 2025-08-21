@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="4.0.0.7" />
+    <PackageReference Include="AWSSDK.Core" Version="4.0.0.23" />
+    <PackageReference Include="AWSSDK.SimpleEmail" Version="4.0.0.19" />
     <PackageReference Include="bootstrap" Version="5.3.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
