@@ -53,7 +53,7 @@ namespace DavidBekeris.Controllers
             var emailService = new EmailService(
 Environment.GetEnvironmentVariable("AWS_ACCESS_KEY"),
     Environment.GetEnvironmentVariable("AWS_SECRET_KEY"),
-                "eu-central-1" // or your SES region
+                "eu-central-1" // or your SES region1
             );
 
             await emailService.SendEmailAsync(
