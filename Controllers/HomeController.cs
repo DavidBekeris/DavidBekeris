@@ -44,26 +44,42 @@ namespace DavidBekeris.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Contact(ContactFormModel model)
+        [HttpPost("Kontakt")]
+        public async Task<IActionResult> Kontakt(ContactFormModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var emailService = new EmailService(
-Environment.GetEnvironmentVariable("AWS_ACCESS_KEY"),
-    Environment.GetEnvironmentVariable("AWS_SECRET_KEY"),
-                "eu-central-1" // or your SES region1
-            );
+            try
+            {
+                // 1. Get AWS keys from Secrets Manager
+                var secretsHelper = new AwsSecretsHelper("eu-central-1");
+                var (accessKey, secretKey) = await secretsHelper.GetSesKeysAsync();
 
-            await emailService.SendEmailAsync(
-                model.Email,               // user’s email
-                "david-_-bkrs@hotmail.com",  // where you want to receive it
-                model.Subject,
-                model.Message
-            );
+                // 2. Use EmailService with those keys
+                var emailService = new EmailService(accessKey, secretKey, "eu-central-1");
 
-            return RedirectToAction("ThankYou");
+                await emailService.SendEmailAsync(
+                    model.Email,                  // from user
+                    "david-_-bkrs@hotmail.com",   // your inbox
+                    model.Subject,
+                    model.Message
+                );
+
+                // 3. Redirect on success
+                return RedirectToAction("ThankYou");
+            }
+            catch (Exception ex)
+            {
+                // Optional: log the error (ex.Message)
+                ModelState.AddModelError("", "Oops! Something went wrong sending your message.");
+                return View(model);
+            }
+        }
+
+        public IActionResult ThankYou()
+        {
+            return View();
         }
     }
 }
