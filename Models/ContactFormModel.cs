@@ -4,6 +4,8 @@ namespace DavidBekeris.Models
 {
     public class ContactFormModel
     {
+        public const string ConfigurationSection = nameof(ContactFormModel);
+
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
