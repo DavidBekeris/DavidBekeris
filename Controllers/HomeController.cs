@@ -79,7 +79,7 @@ namespace DavidBekeris.Controllers
 
         public IActionResult ThankYou()
         {
-            return View();
+            return View("Views/Home/Kontakt.cshtml");
         }
     }
 }
