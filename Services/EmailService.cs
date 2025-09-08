@@ -15,27 +15,21 @@ public class AwsSecretsHelper
 
     public AwsSecretsHelper(string region)
     {
-        // Load credentials from the default AWS CLI profile
-        var chain = new CredentialProfileStoreChain();
-        if (!chain.TryGetAWSCredentials("default", out var awsCredentials))
-        {
-            throw new Exception("Could not load AWS credentials from AWS CLI profile.");
-        }
-
-        _secretsManager = new AmazonSecretsManagerClient(
-            awsCredentials,
-            RegionEndpoint.GetBySystemName(region)
-        );
+        // If running in production on AWS with an IAM role, the SDK automatically picks up credentials
+        _secretsManager = new AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(region));
     }
 
     public async Task<(string accessKey, string secretKey)> GetSesKeysAsync()
     {
         var request = new GetSecretValueRequest
         {
-            SecretId = "/SES/Credentials-Main"
+            SecretId = "/SES/Credentials-Main" // name of your secret in Secrets Manager
         };
 
         var response = await _secretsManager.GetSecretValueAsync(request);
+
+        if (string.IsNullOrEmpty(response.SecretString))
+            throw new Exception("Secret string is empty.");
 
         var dict = JsonSerializer.Deserialize<Dictionary<string, string>>(response.SecretString);
 
@@ -43,28 +37,42 @@ public class AwsSecretsHelper
     }
 }
 
+
 public class EmailService
 {
     private readonly IAmazonSimpleEmailService _ses;
 
-    public EmailService(string awsAccessKey, string awsSecretKey, string region)
+    public EmailService(string? awsAccessKey, string? awsSecretKey, string region)
     {
         var config = new AmazonSimpleEmailServiceConfig
         {
             RegionEndpoint = RegionEndpoint.GetBySystemName(region)
         };
 
-        _ses = new AmazonSimpleEmailServiceClient(awsAccessKey, awsSecretKey, config);
+        // Use provided keys if available; otherwise rely on IAM role in production
+        if (!string.IsNullOrEmpty(awsAccessKey) && !string.IsNullOrEmpty(awsSecretKey))
+        {
+            _ses = new AmazonSimpleEmailServiceClient(awsAccessKey, awsSecretKey, config);
+        }
+        else
+        {
+            _ses = new AmazonSimpleEmailServiceClient(config);
+        }
     }
 
-    public async Task SendEmailAsync(string from, string to, string subject, string body, string replyTo = null)
+    public async Task SendEmailAsync(
+        string from,
+        string to,
+        string subject,
+        string body,
+        string? replyTo = null)
     {
         var sendRequest = new SendEmailRequest
         {
-            Source = "noreply@davidbekeris.se", // must be a verified SES email
+            Source = from, // must be a verified SES email
             Destination = new Destination
             {
-                ToAddresses = new List<string> { to } // can be any recipient
+                ToAddresses = new List<string> { to }
             },
             Message = new Message
             {
@@ -78,14 +86,14 @@ public class EmailService
                     Text = new Content(body)
                 }
             },
-            ConfigurationSetName = "EmailTrackingSet" // attach the configuration set to log delivery/bounce
+            ConfigurationSetName = "EmailTrackingSet" // optional, logs delivery/bounce
         };
 
-        // If replyTo is provided, set it
         if (!string.IsNullOrEmpty(replyTo))
         {
             sendRequest.ReplyToAddresses = new List<string> { replyTo };
         }
+
         try
         {
             await _ses.SendEmailAsync(sendRequest);
