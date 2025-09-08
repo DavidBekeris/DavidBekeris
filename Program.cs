@@ -1,6 +1,5 @@
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
-using DavidBekeris.Data;
 using DavidBekeris.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<DavidBekerisContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-});
 
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 
