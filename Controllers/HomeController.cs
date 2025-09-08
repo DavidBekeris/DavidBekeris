@@ -1,7 +1,7 @@
 ﻿using DavidBekeris.Models;
+using DavidBekeris.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using DavidBekeris.Services;
 
 namespace DavidBekeris.Controllers
 {
@@ -55,38 +55,37 @@ namespace DavidBekeris.Controllers
 
             try
             {
-                // 1. Get AWS keys from Secrets Manager
+                // 1. Get AWS keys from Secrets Manager (optional for IAM role)
                 var secretsHelper = new AwsSecretsHelper("eu-central-1");
                 var (accessKey, secretKey) = await secretsHelper.GetSesKeysAsync();
 
-                // 2. Use EmailService with those keys
+                // 2. Initialize EmailService (keys optional if running with IAM role)
                 var emailService = new EmailService(accessKey, secretKey, "eu-central-1");
 
+                // 3. Send the email
                 await emailService.SendEmailAsync(
-                    from: "noreply@davidbekeris.se",       // your verified sender
-                    to: "david-_-bkrs@hotmail.com",       // your inbox
+                    from: "noreply@davidbekeris.se",        // Verified SES sender
+                    to: "david-_-bkrs@hotmail.com",        // Your inbox
                     subject: model.Subject,
                     body: $"Message from {model.Email}:\n\n{model.Message}",
-                    replyTo: model.Email
+                    replyTo: model.Email                     // User's email for reply
                 );
 
-                // 3. Set a flag to display success message
+                // 4. Set a flag to display a success message on the view
                 ViewBag.EmailSent = true;
 
-                // Return the same view with empty form or original model
+                // 5. Return a fresh form (or you could return model if you prefer to keep data)
                 return View(new ContactFormModel());
             }
             catch (Exception ex)
             {
-                // Log the error if you want
+                // Log the full error (useful in production logs or CloudWatch)
+                Console.WriteLine("SES Error: " + ex.ToString());
+
+                // Add a user-friendly error message for the form
                 ModelState.AddModelError("", "Oops! Something went wrong sending your message.");
                 return View(model);
             }
         }
-
-        public IActionResult ThankYou()
-        {
-            return View("Views/Home/Kontakt.cshtml");
-        }
-    }
+    } 
 }
