@@ -1,4 +1,4 @@
-using DavidBekeris.Models;
+﻿using DavidBekeris.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using DavidBekeris.Services;
@@ -52,26 +52,28 @@ namespace DavidBekeris.Controllers
 
             try
             {
-                // 1. Get AWS keys from Secrets Manager
+                // 1️⃣ Get AWS keys from Secrets Manager
                 var secretsHelper = new AwsSecretsHelper("eu-central-1");
                 var (accessKey, secretKey) = await secretsHelper.GetSesKeysAsync();
 
-                // 2. Use EmailService with those keys
+                // 2️⃣ Use EmailService with those keys
                 var emailService = new EmailService(accessKey, secretKey, "eu-central-1");
 
+                // 3️⃣ Send email using a verified sender
                 await emailService.SendEmailAsync(
-                    model.Email,                  // from user
-                    "david-_-bkrs@hotmail.com",   // your inbox
-                    model.Subject,
-                    model.Message
+                    from: "david-_-bkrs@hotmail.com",      // SES-verified sender
+                    to: "david-_-bkrs@hotmail.com",      // your inbox
+                    subject: model.Subject,
+                    body: $"Message from {model.Email}:\n\n{model.Message}",
+                    replyTo: model.Email                  // user email for replies
                 );
 
-                // 3. Redirect on success
+                // 4️⃣ Redirect on success
                 return RedirectToAction("ThankYou");
             }
             catch (Exception ex)
             {
-                // Optional: log the error (ex.Message)
+                // Optional: log ex.Message
                 ModelState.AddModelError("", "Oops! Something went wrong sending your message.");
                 return View(model);
             }
