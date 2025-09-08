@@ -2,6 +2,13 @@
     ViewData["Title"] = "Kontakt - ";
 }
 @model DavidBekeris.Models.ContactFormModel
+@if (ViewBag.EmailSent != null && ViewBag.EmailSent == true)
+{
+    <div class="confirmation-message text-center my-4 p-3 border rounded">
+        <h5 class="text-success">✅ Meddelande har skickats!</h5>
+        <p>Tack för att du kontaktar mig. Återkommer så fort jag kan.</p>
+    </div>
+}
 
 <!-- Contact 5 - Bootstrap Brain Component -->
 <section class="col-12 py-3 py-md-5 py-xl-8">
@@ -10,7 +17,6 @@
             <div class="col-12 col-md-10 col-lg-12">
                 <h2 class="fs-5 mb-2 text-secondary text-uppercase">Kontakt</h2>
                 <h4 class="display-5 mb-4 mb-md-5 mb-xl-8">Alltid öppen för förslag eller att bara prata.</h4>
-                <h4 class="fs-5 mb-2 mb-xl-8">För närvarande är kontakt formuläret ur funktion men kontakta gärna mig via mail på: david-_-bkrs@hotmail.com </h4>
             </div>
         </div>
     </div>
@@ -41,7 +47,7 @@
                             </div>
                             <div class="col-12">
                                 <label asp-for="Message" class="form-label">Meddelande<span class="text-danger">*</span></label>
-                                <textarea asp-for="Message" id="message" name="message" rows="3" required></textarea>
+                                <textarea asp-for="Message" class="form-control" id="message" name="message" rows="4" required></textarea>
                                 <span asp-validation-for="Message" class="text-danger"></span>
                             </div>
                             <div class="col-12">

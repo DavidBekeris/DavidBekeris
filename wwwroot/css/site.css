@@ -54,6 +54,10 @@ body {
     color: white !important;
 }
 
+.confirmation-message {
+    margin-top: 60px !important;
+    z-index: 1050; 
+}
 
 .footer {
     text-align: center;
