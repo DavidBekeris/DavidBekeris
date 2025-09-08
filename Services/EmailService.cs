@@ -1,4 +1,5 @@
 ﻿using Amazon;
+using Amazon.Runtime.CredentialManagement;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
 using Amazon.SimpleEmail;
@@ -14,14 +15,24 @@ public class AwsSecretsHelper
 
     public AwsSecretsHelper(string region)
     {
-        _secretsManager = new AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(region));
+        // Load credentials from the default AWS CLI profile
+        var chain = new CredentialProfileStoreChain();
+        if (!chain.TryGetAWSCredentials("default", out var awsCredentials))
+        {
+            throw new Exception("Could not load AWS credentials from AWS CLI profile.");
+        }
+
+        _secretsManager = new AmazonSecretsManagerClient(
+            awsCredentials,
+            RegionEndpoint.GetBySystemName(region)
+        );
     }
 
     public async Task<(string accessKey, string secretKey)> GetSesKeysAsync()
     {
         var request = new GetSecretValueRequest
         {
-            SecretId = "MyApp/SES/Credentials" // same name you used in AWS
+            SecretId = "/SES/Credentials-Main"
         };
 
         var response = await _secretsManager.GetSecretValueAsync(request);
@@ -64,7 +75,15 @@ public class EmailService
                 }
             }
         };
-
-        await _ses.SendEmailAsync(sendRequest);
+        try
+        {
+            await _ses.SendEmailAsync(sendRequest);
+            Console.WriteLine("Email sent successfully!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("SES send failed: " + ex.Message);
+            throw;
+        }
     }
 }
