@@ -49,40 +49,28 @@ namespace DavidBekeris.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Return the view with validation errors
                 return View(model);
             }
 
             try
             {
-                // 1. Get AWS keys from Secrets Manager (optional for IAM role)
-                var secretsHelper = new AwsSecretsHelper("eu-central-1");
-                var (accessKey, secretKey) = await secretsHelper.GetSesKeysAsync();
+                // No keys fetched anymore — IAM role is used
+                var emailService = new EmailService("eu-central-1");
 
-                // 2. Initialize EmailService (keys optional if running with IAM role)
-                var emailService = new EmailService(accessKey, secretKey, "eu-central-1");
-
-                // 3. Send the email
                 await emailService.SendEmailAsync(
-                    from: "noreply@davidbekeris.se",        // Verified SES sender
-                    to: "david-_-bkrs@hotmail.com",        // Your inbox
+                    from: "noreply@davidbekeris.se",
+                    to: "david-_-bkrs@hotmail.com",
                     subject: model.Subject,
                     body: $"Message from {model.Email}:\n\n{model.Message}",
-                    replyTo: model.Email                     // User's email for reply
+                    replyTo: model.Email
                 );
 
-                // 4. Set a flag to display a success message on the view
                 ViewBag.EmailSent = true;
-
-                // 5. Return a fresh form (or you could return model if you prefer to keep data)
                 return View(new ContactFormModel());
             }
             catch (Exception ex)
             {
-                // Log the full error (useful in production logs or CloudWatch)
                 Console.WriteLine("SES Error: " + ex.ToString());
-
-                // Add a user-friendly error message for the form
                 ModelState.AddModelError("", "Oops! Something went wrong sending your message.");
                 return View(model);
             }
