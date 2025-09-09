@@ -89,67 +89,6 @@ body {
     }
 }
 
-/*.page-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}*/
-
-/*.header {
-    width: 300px;
-    background-color: #333;
-    color: white;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    padding: 1rem;
-}*/
-
-/*.rounded-lg-3{
-    margin: 10px;
-}*/
-
-
-
-
-
-/*--------------------------------------------------------------
-# Scroll Top Button
---------------------------------------------------------------*/
-.scroll-top {
-    position: fixed;
-    visibility: hidden;
-    opacity: 0;
-    right: 15px;
-    bottom: -15px;
-    z-index: 99999;
-    background-color: var(--accent-color);
-    width: 44px;
-    height: 44px;
-    border-radius: 50px;
-    transition: all 0.4s;
-}
-
-    .scroll-top i {
-        font-size: 24px;
-        color: var(--contrast-color);
-        line-height: 0;
-    }
-
-    .scroll-top:hover {
-        background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
-        color: var(--contrast-color);
-    }
-
-    .scroll-top.active {
-        visibility: visible;
-        opacity: 1;
-        bottom: 15px;
-    }
-
-
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
@@ -346,8 +285,8 @@ body {
     border-radius: 10px;
     cursor: pointer;
     position: fixed;
-    top: 15px;
-    right: 15px;
+    top: 5px;
+    right: 5px;
     z-index: 9999;
     transition: background-color 0.3s;
 }
