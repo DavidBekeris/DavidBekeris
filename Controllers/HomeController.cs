@@ -59,7 +59,7 @@ namespace DavidBekeris.Controllers
 
                 await emailService.SendEmailAsync(
                     from: "noreply@davidbekeris.se",
-                    to: "david-_-bkrs@hotmail.com",
+                    to: "davidbekeris@hotmail.com",
                     subject: model.Subject,
                     body: $"Message from {model.Email}:\n\n{model.Message}",
                     replyTo: model.Email
