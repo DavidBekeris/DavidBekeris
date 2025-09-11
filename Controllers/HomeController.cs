@@ -45,7 +45,7 @@ namespace DavidBekeris.Controllers
         }
 
         [HttpPost("Kontakt")]
-        public async Task<IActionResult> Kontakt(ContactFormModel model)
+        public async Task<IActionResult> Kontakt(ContactFormModel model, string RecaptchaToken)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +54,17 @@ namespace DavidBekeris.Controllers
 
             try
             {
-                // No keys fetched anymore — IAM role is used
+                // 🔹 1. Get Google reCAPTCHA secret from Secrets Manager
+                var recaptchaHelper = new GoogleRecaptchaHelper("eu-central-1");
+                var recaptchaService = new GoogleRecaptchaService(recaptchaHelper);
+
+                if (!await recaptchaService.ValidateTokenAsync(RecaptchaToken))
+                {
+                    ModelState.AddModelError("", "reCAPTCHA validation failed. Please try again.");
+                    return View(model);
+                }
+
+                // 🔹 3. Send the email with SES (IAM role handles credentials)
                 var emailService = new EmailService("eu-central-1");
 
                 await emailService.SendEmailAsync(
