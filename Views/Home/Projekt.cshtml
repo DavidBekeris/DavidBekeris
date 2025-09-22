@@ -1,20 +1,34 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Projekt - ";
 }
 <div class="container py-3 py-md-5 py-xl-8">
 
-<h1>Projekt</h1>
+    <h1>Projekt</h1>
+    <div class="row pt-4 pb-3">
+        <div class="cv-cards card col-6 m-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Butiks sida</h5>
+                <p class="card-text">
+                    Hemsida för en butik. Med administratör panel, användare. Order hantering, varukorg med stripe. Med mera!
+                    Projektet går att ladda ner lokalt via github.
+                </p>
+                <a href="https://github.com/DavidBekeris/MewMart" target="_blank" rel="noopener noreferrer">Pågående - Länk till Github</a>
+                <div class="row">
+                    @* <a href="" class="" "target=" _blank" rel="noopener noreferrer">Länk till bilder</a> *@
+                </div>
+            </div>
+        </div>
 
-<div class="cv-cards card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Pris jämförare</h5>
-    <p class="card-text">
-        Denna sidans ändemål är att kunna se historiken på priser
-        och kunna sätta alarm på när varan blir billigare.
-    </p>
-        <a class="card-link" asp-area="" asp-controller="Home" asp-action="Index">Ej påbörjad</a>
-  </div>
-</div>
+        <div class="cv-cards card col-6 m-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Pris jämförare</h5>
+                <p class="card-text">
+                    Denna sidans ändemål är att kunna se historiken på priser
+                    och kunna sätta alarm på när varan blir billigare.
+                </p>
+                <a class="card-link" asp-area="" asp-controller="Home" asp-action="Index">Ej påbörjad</a>
+            </div>
+        </div>
+    </div>
 
 </div>
