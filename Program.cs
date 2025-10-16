@@ -41,35 +41,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.MapPost("email", async (string email, IAmazonSimpleEmailService emailService, ContactFormModel settings) =>
-{
-    var request = new SendEmailRequest
-    {
-        Source = settings.Email,
-        Destination = new Destination
-        {
-            ToAddresses = [email]
-        },
-        Message = new Message
-        {
-            Subject = new Content("Test mail from program line 60"),
-            Body = new Body
-            {
-                Html = new Content("""
-                    <html>
-                    <body> 
-                    <p> Test message from program line 66</p>
-                    </body>
-                    </html>
-                    """)
-            }
-        }
-    };
-    var response = await emailService.SendEmailAsync(request);
-
-    return Results.Ok(new { response.MessageId, response.HttpStatusCode });
-});
-
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
