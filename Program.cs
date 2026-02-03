@@ -3,7 +3,9 @@ using Amazon.SimpleEmail.Model;
 using DavidBekeris.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Configuration;
+using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +27,26 @@ if (env.IsDevelopment())
 }
 else
 {
-    builder.WebHost.ConfigureKestrel(serverOptions =>
+    builder.WebHost.ConfigureKestrel(static serverOptions =>
     {
         serverOptions.ListenAnyIP(5000); // Prod only
     });
 }
+
+//builder.Services.AddHttpsRedirection(options =>
+//{
+//    options.RedirectStatusCode = Status307TemporaryRedirect;
+//    options.HttpsPort = 5000;
+//});
+
+//if (!builder.Environment.IsDevelopment())
+//{
+//    builder.Services.AddHttpsRedirection(options =>
+//    {
+//        options.RedirectStatusCode = Status308PermanentRedirect;
+//        options.HttpsPort = 443;
+//    });
+//}
 
 var app = builder.Build();
 
@@ -41,7 +58,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
